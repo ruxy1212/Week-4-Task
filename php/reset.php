@@ -19,9 +19,8 @@ function resetPassword($email, $password){
     $csvr = '../storage/temporary.csv';
     $csv = fopen($csvf, "r");
     $cvv = fopen($csvr, 'w');
-    
+    $count = 0;
     while (($data = fgetcsv($csv)) !== FALSE) {
-        $count = 0;
         if ($data[1] == $email) {
             $data[2] = $password;
             $count++;
