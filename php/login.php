@@ -7,12 +7,16 @@ if(isset($_POST['submit'])){
     $result = loginUser($email, $password);
 
     //echo "$email $password, $result";
-    if ($result == true) {
-        echo "Login Successful!";
-        echo "<br><br><a href='../dashboard.php'>Go Dashboard</a>";
+    if ($result) {
+        echo "<script type='text/javascript'>
+                alert('Login Successful!');
+                window.location = '../dashboard.php';
+            </script>";
     } else {
-        echo "Incorrect password or email!";
-        echo "<br><br><a href='../forms/login.html'>Try again</a>";
+        echo "<script type='text/javascript'>
+                alert('Incorrect password or email!');
+                window.location = '../forms/login.html';
+            </script>";
     }
 }
 
@@ -28,9 +32,7 @@ function loginUser($email, $password){
             return $success;
         }
     }
-
-    fclose($csv);
-    
+    fclose($csv);   
     return $success;
 }
 

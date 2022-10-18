@@ -4,7 +4,20 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-registerUser($username, $email, $password);
+    $result = registerUser($username, $email, $password);
+    if($result){
+        echo "<script type='text/javascript'>
+                alert('User Successfully registered!');
+                window.location = '../forms/login.html';
+            </script>";
+    }else{
+        echo "<script type='text/javascript'>
+                alert('Something went wrong, try again!');
+                window.location = '../forms/register.html';
+            </script>";
+    }
+
+
 
 }
 
@@ -16,7 +29,7 @@ function registerUser($username, $email, $password){
     }
 
     $csvHead = fopen($csvFile, "r");
-    if(!($csvData = fgetcsv($csvHead))) { //check if header exist in csv file
+    if(!($csvData = fgetcsv($csvHead))) { //check if header already exist in csv file
         fclose($csvHead);
         $csvHead = fopen($csvFile, 'w');
         fputcsv($csvHead,  ['Username','Email Address','Password']);
@@ -25,15 +38,11 @@ function registerUser($username, $email, $password){
 
     $csvData = fopen($csvFile, 'a'); //append new data to csv table
     if(fputcsv($csvData,  [$username, $email, $password])){ 
-        echo "User Successfully registered!";
         fclose($csvData);
-        echo "<br><br><a href='../forms/login.html'>Log In</a>";
-        // header('location: ../forms/login.html');
+        return true;
     } else {
-        echo "Something went wrong, try again!";
         fclose($csvData);
-        echo "<br><br><a href='../index.php'>Go back</a>";
-        //header('location: ../forms/register.html');
+        return false;
     }
    
 }

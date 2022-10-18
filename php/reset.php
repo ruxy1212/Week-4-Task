@@ -5,11 +5,19 @@ if(isset($_POST['submit'])){
 
     $result = resetPassword($email, $password);
     if($result == true){
-        echo "Password was changed successfully!";
-        echo "<br><br><a href='../forms/login.html'>Log In</a>";
+        echo "<script type='text/javascript'>
+            alert('Password was changed successfully!');
+            window.location = '../forms/login.html';
+        </script>";
+      //  echo "Password was changed successfully!";
+       // echo "<br><br><a href='../forms/login.html'>Log In</a>";
     } else {
-        echo "User does not exist";
-        echo "<br><br><a href='../forms/resetpassword.html'>Try again</a>";
+        echo "<script type='text/javascript'>
+            alert('User does not exist');
+            window.location = '../forms/resetpassword.html';
+        </script>";
+        // echo "User does not exist";
+        // echo "<br><br><a href='../forms/resetpassword.html'>Try again</a>";
     }
 }
 
