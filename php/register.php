@@ -4,6 +4,13 @@ if(isset($_POST['submit'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    $check = checkEmail($email);
+    if($check){
+        echo "<script type='text/javascript'>
+                alert('Email already exists! Login');
+                window.location = '../forms/login.html';
+            </script>";
+    }
     $result = registerUser($username, $email, $password);
     if($result){
         echo "<script type='text/javascript'>
@@ -46,7 +53,16 @@ function registerUser($username, $email, $password){
     }
    
 }
-// echo "HANDLE THIS PAGE";
 
-
-
+function checkEmail($email){
+    $csvFile = "../storage/users.csv";
+    $csvData = fopen($csvFile, 'r');
+    while(($data = fgetcsv($csvData)) !== FALSE){
+        $data = fgetcsv($csvData);
+        if($data[1] == $email){
+            return true;
+        }
+    }
+    fclose($csvData);
+    return false;
+}
